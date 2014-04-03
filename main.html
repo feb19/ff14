@@ -1,0 +1,240 @@
+
+      <div class="starter-template">
+        <h1>最適な食事を知る</h1>
+        <p class="lead">FF14 v2.2 対応　{{items.length}} 種の食事から</p>
+      </div>
+      
+      
+<!--       <h3>色とりどりの食事を有効活用しよう</h3> -->
+      <div class=" well" style="padding: 15px 15px 0 15px;">
+        <p>最適な食事は、ステータスや用途によって変わります。</p>
+        <p>『VIT +10% (上限2)』効果の食事の場合、プレーヤー自身の基礎 VIT が 21 以上であれば上昇 VIT は +2 までとなり、基礎 VIT が 10 であれば +1 しか増えません。(VIT は最大 HP に影響します。)</p>
+        <p>このアプリは、用途にあわせた最適な上昇幅の食事を最大 14 件抽出します。</p>
+        <p class="text-muted">どれでも経験値+3%効果付くし、ペロっても効果消えないんだからマーケットでドカンと買って食えよな。</p>
+      </div>
+      
+      
+      
+      
+      <h3>①現在のステータスを入力してください</h3>
+      <form class="form-horizontal" role="form" novalidate class="status-form" name="form">
+      <div class="row">
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputVIT">VIT</label>
+        </dt>
+        <dd class="">
+          <span ng-show="form.inputVIT.$error.float"></span>
+          <input type="text" class="form-control" id="inputVIT" smart-float ng-model="inputVIT" name="inputVIT" ng-change="change()">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputPIE">PIE</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputPIE" smart-float ng-model="inputPIE" name="inputPIE">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputAccuracy">命中力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputAccuracy" smart-float ng-model="inputAccuracy" name="inputAccuracy">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputDetermination">意志力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputDetermination" smart-float ng-model="inputDetermination" name="inputDetermination">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputCritical">クリティカル発動力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputCritical" smart-float ng-model="inputCritical" name="inputCritical">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputParry">受け流し発動力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputParry" smart-float ng-model="inputParry" name="inputParry">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputSkillSpeed">スキルスピード</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputSkillSpeed" smart-float ng-model="inputSkillSpeed" name="inputSkillSpeed">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputSpellSpeed">スペルスピード</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputSpellSpeed" smart-float ng-model="inputSpellSpeed" name="inputSpellSpeed">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd> 
+        
+      </dl>
+      </div>
+        
+      <div class="row">
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputCP">CP</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputCP" smart-float ng-model="inputCP" name="inputCP">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputCraftsmanship">作業精度</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputCraftsmanship" smart-float ng-model="inputCraftsmanship" name="inputCraftsmanship">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputControl">加工精度</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputControl" smart-float ng-model="inputControl" name="inputControl">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+      </div>
+      <div class="row">
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputGP">GP</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputGP" smart-float ng-model="inputGP" name="inputGP">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputGathering">識質力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputGathering" smart-float ng-model="inputGathering" name="inputGathering">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+      </dl>
+        
+      <dl class="dl-horizontal col-md-4">
+        <dt>
+          <label class="control-label" for="inputPerception">獲得力</label>
+        </dt>
+        <dd>
+          <input type="text" class="form-control" id="inputPerception" smart-float ng-model="inputPerception" name="inputPerception">
+          <span class="glyphicon form-control-feedback"></span>
+        </dd>
+        
+      </dl>
+      </div>
+      
+      </form>
+      
+      <h3>②今回重視したいステータスを選びます</h3>
+      <dl class="dl-horizontal">
+        <dt class="text-muted">ファイター・ソーサラー</dt>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="vit" ng-change="update()" id="priorityVIT"> <label for="priorityVIT">HP 重視 (VIT)</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="pie" ng-change="update()" id="priorityPIE"> <label for="priorityPIE">MP 重視 (PIE)</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="critical" ng-change="update()" id="priorityCritical"> <label for="priorityCritical">物理・魔法クリティカル重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="determination" ng-change="update()" id="priorityDetermination"> <label for="priorityDetermination">物理・魔法ダメージ・ヒール量重視 (意志力)</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="accuracy" ng-change="update()" id="priorityAccuracy"> <label for="priorityAccuracy">物理・魔法命中率重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="parry" ng-change="update()" id="priorityParry"> <label for="priorityParry">回避重視 (受け流し発生率)</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="skillspeed" ng-change="update()" id="prioritySkillSpeed"> <label for="prioritySkillSpeed">スキルスピード重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="spellspeed" ng-change="update()" id="prioritySpellSpeed"> <label for="prioritySpellSpeed">スペルスピード重視</label>
+        </dd>
+        
+        <dt class="text-muted">クラフター</dt>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="cp" ng-change="update()" id="priorityCP"> <label for="priorityCP">CP重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="craftsmanship" ng-change="update()" id="priorityCraftsmanship"> <label for="priorityCraftsmanship">作業精度重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="control" ng-change="update()" id="priorityControl"> <label for="priorityControl">加工精度重視</label>
+        </dd>
+        
+        <dt class="text-muted">ギャザラー</dt>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="gp" ng-change="update()" id="priorityGP"> <label for="priorityGP">GP重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="gathering" ng-change="update()" id="priorityGathering"> <label for="priorityGathering">獲得力重視</label>
+        </dd>
+        <dd>
+        <input type="radio" name="priority" ng-model="priority" value="perception" ng-change="update()" id="priorityPerception"> <label for="priorityPerception">識質力重視</label>
+        </dd>
+      </dl>
+      
+      <h3>③ここにでるよ</h3>
+      <div class="table-responsive">
+      <table class="table table-hover">
+        <tr>
+          <th></th>
+          <th>アイテム名</th>
+          <th>食事効果</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="item in result|limitTo:14">
+          <td class="text-muted">{{$index + 1}}</td>
+          <td>{{ item.item.name }}</td>
+          <td>{{ item.item.description }}</td>
+          <td class="text-muted">{{ item.rank }}</td>
+        </tr>
+      </table>
+      </div>
+      
+      
