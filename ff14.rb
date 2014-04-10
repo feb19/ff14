@@ -34,6 +34,7 @@ def loadRanking(loadUrl)
                 itemTitle = itemNode.children[0].text
 #                 p itemTitle
             end
+            item = {}
             itemDesc = []
             itemTypes = []
             itemDoc.xpath('//ul[@class="sys_nq_element list_1col mb10"]').each do |itemNode|
@@ -43,7 +44,7 @@ def loadRanking(loadUrl)
                         itemDesc.push str
                         
                         isPercentType = 0
-                        type = ['"vit', '"pie', '"accuracy', '"determination', '"parry', '"critical', '"skillspeed', '"spellspeed', '"cp', '"craftsmanship', '"control', '"gp', '"gathering', '"perception', '"slow', '"slient', '"poison', '"darken', '"sleep', '"stan', '"bind', '"heavy']
+                        type = ['vit', 'pie', 'accuracy', 'determination', 'parry', 'critical', 'skillspeed', 'spellspeed', 'cp', 'craftsmanship', 'control', 'gp', 'gathering', 'perception', 'slow', 'slient', 'poison', 'darken', 'sleep', 'stan', 'bind', 'heavy']
                         type_str = ''
                         if /VIT/ =~ str
                             type_str = type[0]
@@ -123,23 +124,31 @@ def loadRanking(loadUrl)
                                 m = str.match(/([0-9]+)\%?/)
                                 id = m[1]
                                 itemTypes.push(type_str+'per":'+id)
+                                item[type_str+'per'] = id;
+                                
                                 m = str.match(/上限\s?([0-9]+)/)
                                 id = m[1]
                                 itemTypes.push(type_str+'max":'+id)
+                                item[type_str+'max'] = id;
                             end
                             if isPercentType == 0
                                 m = str.match(/([0-9]+)\%?/)
                                 id = m[0]
                                 itemTypes.push(type_str+'":'+id)
+                                item[type_str] = id;
                             end
                         end
                     end
                 end
             end
             if (itemDesc.length > 0 && itemTypes.length > 0)
-                $items.push('{"name": "' + itemTitle + '", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
+                #$items.push('{"name": "' + itemTitle + '", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
+                item['name'] = itemTitle;
+                item['description'] = itemDesc.join('　');
+
+                $items.push(item);#'{"name": "' + itemTitle + '", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
             end
-            
+            item = {}
             itemDesc = []
             itemTypes = []
             itemDoc.xpath('//ul[@class="sys_hq_element list_1col mb10"]').each do |itemNode|
@@ -149,7 +158,7 @@ def loadRanking(loadUrl)
                         itemDesc.push str
                         
                         isPercentType = 0
-                        type = ['"vit', '"pie', '"accuracy', '"determination', '"parry', '"critical', '"skillspeed', '"spellspeed', '"cp', '"craftsmanship', '"control', '"gp', '"gathering', '"perception', '"slow', '"slient', '"poison', '"darken', '"sleep', '"stan', '"bind', '"heavy']
+                        type = ['vit', 'pie', 'accuracy', 'determination', 'parry', 'critical', 'skillspeed', 'spellspeed', 'cp', 'craftsmanship', 'control', 'gp', 'gathering', 'perception', 'slow', 'slient', 'poison', 'darken', 'sleep', 'stan', 'bind', 'heavy']
                         type_str = ''
                         if /VIT/ =~ str
                             type_str = type[0]
@@ -228,14 +237,17 @@ def loadRanking(loadUrl)
                             m = str.match(/([0-9]+)\%?/)
                             id = m[1]
                             itemTypes.push(type_str+'per":'+id)
+                            item[type_str+'per'] = id;
                             m = str.match(/上限\s?([0-9]+)/)
                             id = m[1]
                             itemTypes.push(type_str+'max":'+id)
+                            item[type_str+'max'] = id;
                         end
                         if isPercentType == 0
                             m = str.match(/([0-9]+)\%?/)
                             id = m[0]
                             itemTypes.push(type_str+'":'+id)
+                            item[type_str] = id;
                         end
                     end
                 end
@@ -246,7 +258,10 @@ def loadRanking(loadUrl)
 #                 end
             end
             if (itemDesc.length > 0 && itemTypes.length > 0)
-                $items.push('{"name": "' + itemTitle + 'HQ", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
+                item['name'] = itemTitle;
+                item['description'] = itemDesc.join('　');
+                $items.push(item);
+                #$items.push('{"name": "' + itemTitle + 'HQ", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
             end
 
 
@@ -258,6 +273,11 @@ end
 loadRanking("http://jp.finalfantasyxiv.com/lodestone/playguide/db/item/?category2=5&page=1&category3=46")
 loadRanking("http://jp.finalfantasyxiv.com/lodestone/playguide/db/item/?category2=5&page=2&category3=46")
 loadRanking("http://jp.finalfantasyxiv.com/lodestone/playguide/db/item/?category2=5&page=3&category3=46")
-# render :json => $items#.join(', ')
 
-p $items.join(', ')
+#render :json => $items
+
+file = "ff14.json"
+mode = "w"
+open( file , mode ){|f| f.write($items.to_json)}
+
+#p $items.to_json
