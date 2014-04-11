@@ -258,7 +258,7 @@ def loadRanking(loadUrl)
 #                 end
             end
             if (itemDesc.length > 0 && itemTypes.length > 0)
-                item['name'] = itemTitle;
+                item['name'] = itemTitle + "HQ";
                 item['description'] = itemDesc.join('　');
                 $items.push(item);
                 #$items.push('{"name": "' + itemTitle + 'HQ", "description": "' + itemDesc.join('　') + '", ' + itemTypes.join(', ') + '}')
