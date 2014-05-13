@@ -13,7 +13,7 @@ def loadRanking(loadUrl)
         charset = f.charset
         f.read
     end
-    
+    charset = 'utf-8' 
     doc = Nokogiri::HTML.parse( html, nil, charset )
     
     doc.xpath('//div[@class="ic_link_txt"]').each do |lineNode|
@@ -23,7 +23,7 @@ def loadRanking(loadUrl)
 #             gameUrl = gameUrl.slice(1..-1)
 #             /lodestone/playguide/db/item/e813dbce507/
             rUrl = $baseurl + gameUrl
-#             p rUrl
+             p rUrl
             
             itemHTML = open(rUrl) do |f|
                 f.read
@@ -32,8 +32,9 @@ def loadRanking(loadUrl)
             itemTitle = ''
             itemDoc.xpath('//h2').each do |itemNode|
                 itemTitle = itemNode.children[0].text
-#                 p itemTitle
+                break
             end
+                p itemTitle
             item = {}
             itemDesc = []
             itemTypes = []
